@@ -23,4 +23,7 @@ a:hover {
   .recipe {
     flex: 1 0 calc(25% - 10px);
   }
+}
+.card {
+  background: rgb(65, 65, 65);
 }/*# sourceMappingURL=custom.css.map */

@@ -6,22 +6,22 @@
     <title>"Let's cook" - les Recettes de Cuisine pour la Famille</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="main-color bg-color-m">
-    <header class="header flex jcsb fz-16 p-1 aic">
+<body class="main-color bg-color-m flex aic fdc">
+    <header class="header flex jcsb fz-16 p-1 aic fg">
         <div class="header__logo flex">
-            <h1 class="header__title fz-16 m-1">
+            <h1 class="header__title fz-16 m-1 fg">
                 Let's Cook
             </h1>
         </div> 
-        <nav class="header__nav flex fw-600 aic">
+        <nav class="header__nav flex fw-600 aic fg">
             <div class="header__link m-1"><a href="index.html">Home</a></div>
             <div class="header__link main-color"><a href="newRecipe">+ Add a recipe</a></div>
         </nav>
     </header>
     <main class="main m-1">
-        <header class="main__header flex jcsb">
+        <header class="main__header flex jcsb bg-color-s p-2 br-1">
             <h1 class="main__title">
-                All recipes.
+                All recipes
             </h1>
             <form action="#" class="search-form flex aic">
                 <input type="text" name="search" class="search-input" placeholder="Search for recipes..." />
@@ -29,17 +29,17 @@
                 <select name="first-select" id="first-select">
                     <option value="12">12 par page</option>
                     <option value="24">24 par page</option>
-                    <option value="24">30 par page</option>
+                    <option value="30">30 par page</option>
                 </select>
                 <select name="second-select" id="second-select">
-                    <option>Trier par date croissant</option>
-                    <option>Trier par date decroissant</option>
-                    <option>Trier par nom croissant</option>
-                    <option>Trier par nom decroissant</option>
+                    <option value="sortBy=name&order=asc">Trier par nom croissant</option>
+                    <option value="sortBy=name&order=desc">Trier par nom decroissant</option>
+                    <option value="sortBy=id&order=asc">Trier par date croissant</option>
+                    <option value="sortBy=id&order=desc">Trier par date decroissant</option>    
                 </select>
             </form>
         </header>
-        <div class="container recipes flex fw g-1">
+        <div class="recipes container flex fw g-1">
             <!-- Mobile 1 col -->
             <!-- Tablette 2 col --> 
             <!-- Desktop 4 col -->
@@ -48,6 +48,6 @@
     <footer class="footer">
 
     </footer>
-    <script src="assets/js/index.js"></script>
+    <script src="assets/js/index4.js"></script>
 </body>
 </html>

@@ -12,6 +12,10 @@
     background: rgb(39, 35, 49);
 }
 
+.bg-color-s {
+    background: rgb(65, 65, 65);
+}
+
 
 /* FONTS */
 
@@ -49,8 +53,16 @@
     flex-wrap: wrap;
 }
 
+.fdc {
+    flex-direction: column;
+}
+
 .g-1 {
     gap: 10px;
+}
+
+.fg {
+    flex-grow: 1;
 }
 
 /* SIZING */ 
@@ -83,9 +95,12 @@
     padding: 10px;
 }
 
-.p-1 {
+.p-2 {
     padding: 20px;
 }
 
+/* BORDER */ 
 
-
+.br-1 {
+    
+}

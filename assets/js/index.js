@@ -1,5 +1,5 @@
 const dataLoading = async() => {
-    const response = await fetch('https://dummyjson.com/recipes?limit=12&sortBy=id&order=desc');
+    const response = await fetch('https://dummyjson.com/recipes?limit=12');
     const data = await response.json();
     return data;
 };
@@ -35,30 +35,35 @@ console.log("index.js loaded");
 const search = document.querySelector('.search-form');
 const firstFilter = document.querySelector('#first-select');
 const secondFilter = document.querySelector('#second-select');
-let secondFilterValue = '';
 let firstFilterValue = '';
+let secondFilterValue = '';
 console.log(secondFilter);
-firstFilter.addEventListener('change', (e)=> {
+
+
+firstFilter.addEventListener('change', (e) => {
     console.log(e);
     firstFilterValue = e.target.value;
     console.log(firstFilterValue);
     return firstFilterValue;
 })
 
+secondFilter.addEventListener('change', (e) => {
+    console.log(e);
+    secondFilterValue = e.target.value;
+    console.log(secondFilterValue);
+    return secondFilterValue;
+})
 
 search.addEventListener('submit', (e) => {
     e.preventDefault();
     const searchInfo = e.target[0].value;
     console.log(searchInfo);
-
-    fetch(`https://dummyjson.com/recipes/search?limit=${firstFilterValue}&q=${searchInfo}`)
+    fetch(`https://dummyjson.com/recipes/search?limit=${firstFilterValue}&${secondFilterValue}&q=${searchInfo}`)
         .then((res) => res.json())
         .then((searchData) => {
             console.log(searchData);
-
             const recipesListe = document.querySelector('.recipes');
             recipesListe.innerHTML = '';
-
             searchData.recipes.map((element) => {
                 const recipeElement = document.createElement('div');
                 recipeElement.className = 'recipe';
@@ -74,5 +79,5 @@ search.addEventListener('submit', (e) => {
         })
         .catch(error => {
             console.error('Erreur de rechercher:', error);
-        });
+    });
 });
