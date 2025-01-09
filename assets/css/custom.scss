@@ -20,6 +20,8 @@ a {
     .recipe {
         flex: 1 0 calc(50% - 10px); 
     }
+
+    
 }
 
 @media (min-width: 1068px) {
@@ -28,6 +30,28 @@ a {
     }
 }
 
-.card {
-    background: rgb(65, 65, 65)
+.recipe {
+    background: rgb(65, 65, 65);
+    padding: 20px;
+    border-radius: 10px;
+    h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    img {
+        margin: 15px 0;
+    }
+
+    p {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600; 
+        
+    }
+
+    span {
+        font-size: 14px;
+        font-weight: 400;
+    }   
 }

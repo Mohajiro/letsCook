@@ -38,7 +38,7 @@
 /* FLEX */
 
 .flex {
-    display: flex;
+    display: flex; 
 }
 
 .aic {
@@ -76,6 +76,10 @@
     max-width: 1320px;
 }
 
+.w100 {
+    width: 100%;
+}
+
 /* SPACING */ 
 
 .my {
@@ -87,8 +91,16 @@
     margin: 10px;
 }
 
+.mb-1 {
+    margin-bottom: 10px;
+}
+
 .m-2 {
     margin: 20px;
+}
+
+.mb-2 {
+    margin-bottom: 20px;
 }
 
 .p-1 {
@@ -102,5 +114,10 @@
 /* BORDER */ 
 
 .br-1 {
-    
+    border-radius: 10px;
+}
+
+.ns {
+    border: none; 
+    outline: none;
 }

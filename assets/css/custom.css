@@ -24,6 +24,24 @@ a:hover {
     flex: 1 0 calc(25% - 10px);
   }
 }
-.card {
+.recipe {
   background: rgb(65, 65, 65);
+  padding: 20px;
+  border-radius: 10px;
+}
+.recipe h2 {
+  font-size: 20px;
+  text-align: center;
+}
+.recipe img {
+  margin: 15px 0;
+}
+.recipe p {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+.recipe span {
+  font-size: 14px;
+  font-weight: 400;
 }/*# sourceMappingURL=custom.css.map */
