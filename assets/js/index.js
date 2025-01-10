@@ -1,79 +1,82 @@
-const chargerDonnees = async (url) => {
+// Chargement de la liste
+const dataLoading = async (url) => {
     try {
-        const reponse = await fetch(url);
-        if (!reponse.ok) {
-            throw new Error(`Erreur HTTP ! Statut : ${reponse.status}`);
-        }
-        const donnees = await reponse.json();
-        return donnees;
-    } catch (erreur) {
-        console.error('Erreur lors du chargement des données :', erreur);
-        const recettesListe = document.querySelector('.recipes');
-        recettesListe.innerHTML = `<p class="message-erreur">Erreur de chargement des données. Veuillez réessayer plus tard.</p>`;
-        return null;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error loading data:', error);
     }
 };
 
-const afficherRecettes = (recettes) => {
-    const recettesListe = document.querySelector('.recipes');
-    recettesListe.innerHTML = ''; // Vider le conteneur avant d'ajouter les nouvelles recettes
-
-    if (recettes.length === 0) {
-        recettesListe.innerHTML = `<p class="aucune-recette">Aucune recette ne correspond à votre recherche.</p>`;
+const displayRecipes = (recipes) => {
+    const recipesListe = document.querySelector('.recipes');
+    if (!recipesListe) {
+        console.error('Recipes container not found!');
         return;
     }
 
-    recettes.forEach((element) => {
-        const recetteElement = document.createElement('div');
-        recetteElement.className = 'recipe';
-        recetteElement.innerHTML = `
-            <h2>${element.name}</h2>
-            <img src="${element.image}" alt="${element.name}">
-            <p>Ingrédients : <span>${element.ingredients.join(', ')}</span></p>
+    recipesListe.innerHTML = '';
+    recipes.forEach((element) => {
+        const recipeElement = document.createElement('div');
+        recipeElement.className = 'recipe';
+        recipeElement.innerHTML = `
+            <div class="card">
+                <h2>${element.name}</h2>
+                <img src="${element.image}" alt="${element.name}">
+                <br>
+                <span>${element.ingredients.join(', ')}</span>
+                <br>
+            </div>
         `;
-        recettesListe.appendChild(recetteElement);
+        recipesListe.appendChild(recipeElement);
     });
 };
 
-const mettreAJourRecettes = async (limite, filtre, requete) => {
-    const url = `https://dummyjson.com/recipes?limit=${limite}&${filtre}&q=${requete}`;
-    const donnees = await chargerDonnees(url);
-    if (donnees && donnees.recipes) {
-        afficherRecettes(donnees.recipes);
+const updateRecipes = async ( query = '', filter = '', limit = 12 ) => {
+    const a = query ? `/search?q=${query}` : ''; 
+    const b = filter ? `${query ? `&${filter}` : `?${filter}`}` : '' ;
+    const c = limit ? `${query || filter ? `&limit=${limit}` : `?limit=${limit}`}` : ``;
+    const url = `https://dummyjson.com/recipes${a}${b}${c}`;
+    const data = await dataLoading(url);
+    console.log('URL:', url);
+    if (data?.recipes) {
+        displayRecipes(data.recipes);
     }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    const limiteDefaut = 12;
-    const filtreDefaut = '';
-    const requeteDefaut = '';
+    dataLoading('https://dummyjson.com/recipes?limit=12')
+        .then((data) => {
+            if (data?.recipes) {
+                displayRecipes(data.recipes);
+            }
+        });
 
-    // Charger les 12 premières recettes au chargement de la page
-    mettreAJourRecettes(limiteDefaut, filtreDefaut, requeteDefaut);
+    const firstFilter = document.querySelector('#first-select');
+    const secondFilter = document.querySelector('#second-select');
+    const searchInput = document.querySelector('.search-input'); 
 
-    const premierFiltre = document.querySelector('#first-select');
-    const deuxiemeFiltre = document.querySelector('#second-select');
-    const champRecherche = document.querySelector('.search-input');
+    let firstFilterValue = '';
+    let secondFilterValue = '';
+    let searchQuery = '';
 
-    let valeurPremierFiltre = limiteDefaut;
-    let valeurDeuxiemeFiltre = filtreDefaut;
-    let requeteRecherche = requeteDefaut;
 
-    // Gestion du changement du premier filtre (limite des recettes)
-    premierFiltre.addEventListener('change', (e) => {
-        valeurPremierFiltre = e.target.value;
-        mettreAJourRecettes(valeurPremierFiltre, valeurDeuxiemeFiltre, requeteRecherche);
+    firstFilter.addEventListener('change', (e) => {
+        firstFilterValue = e.target.value;
+        updateRecipes( searchQuery, secondFilterValue,  firstFilterValue); 
     });
 
-    // Gestion du changement du deuxième filtre (tri)
-    deuxiemeFiltre.addEventListener('change', (e) => {
-        valeurDeuxiemeFiltre = e.target.value;
-        mettreAJourRecettes(valeurPremierFiltre, valeurDeuxiemeFiltre, requeteRecherche);
+    secondFilter.addEventListener('change', (e) => {
+        secondFilterValue = e.target.value;
+        updateRecipes( searchQuery, secondFilterValue,  firstFilterValue);
     });
 
-    // Gestion de la saisie dans le champ de recherche
-    champRecherche.addEventListener('input', (e) => {
-        requeteRecherche = e.target.value;
-        mettreAJourRecettes(valeurPremierFiltre, valeurDeuxiemeFiltre, requeteRecherche);
+
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value; 
+        updateRecipes( searchQuery, secondFilterValue,  firstFilterValue); 
     });
 });
+
+console.log("index.js loaded");

@@ -1,51 +1,77 @@
-// Founction de la telechargement des données
-const dataLoading = async (url) => { 
+//Chargement de la liste
+const dataLoading = async (url) => {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log('Data is: ', data);
         return data;
     } catch (error) {
-        console.error('Loading error: ', error);
+        console.error('Error loading data:', error);
     }
 };
 
-// REcuperation des element de DOM
-const recipesListe = document.querySelector('.recipes');
-
-// Founction d'affichage des données
-const displayRecipes = async (url) => {
-    const data = await dataLoading(url)
-
+const displayRecipes = (recipes) => {
+    const recipesListe = document.querySelector('.recipes');
     if (!recipesListe) {
-        console.error('Error of loading, block recipes not found');
+        console.error('Recipes container not found!');
+        return;
     }
 
-    if (recipesListe .length === 0) {
-        console.error('Error of loading, no recipes found');
-    }
-
-    recipesListe.innerHTML = "";
-    console.log('Data is: ', data);
-    data.recipes.forEach(element => {
+    recipesListe.innerHTML = '';
+    recipes.forEach((element) => {
         const recipeElement = document.createElement('div');
         recipeElement.className = 'recipe';
         recipeElement.innerHTML = `
-        <h2>Recette: ${element.name}</h2>
-        <img src="${element.image}" alt="${element.name}">
-        Les ingridients: <br><br> <span>${element.ingredients.join(', ')}</span></p>
-        `;
+            <div class="card">
+            <h2>${element.name}</h2>
+            <img src="${element.image}" alt="${element.name}">
+            <br>
+            <span>${element.ingredients.join(', ')}</span>
+            <br>
+            </div>
+            `;
         recipesListe.appendChild(recipeElement);
     });
-}
+};
 
-displayRecipes('https://dummyjson.com/recipes');
+const updateRecipes = async (limit, filter, query) => {
+    const url = `https://dummyjson.com/recipes/search?limit=${limit}&${filter}&q=${query}`;
+    const data = await dataLoading(url);
+    if (data?.recipes) {
+        displayRecipes(data.recipes);
+    }
+};
 
+document.addEventListener('DOMContentLoaded', () => {
+    dataLoading('https://dummyjson.com/recipes?limit=12')
+        .then((data) => {
+            if (data?.recipes) {
+                displayRecipes(data.recipes);
+            }
+        });
 
-// Function de la formation d'url
+    const firstFilter = document.querySelector('#first-select');
+    const secondFilter = document.querySelector('#second-select');
+    const searchForm = document.querySelector('.search-form');
 
-const urlFormer = (limit, filter, query) => {
-    let url = `https://dummyjson.com/recipes/search?limit=${limit}&${filter}&q=${query}`;
+    let firstFilterValue = '';
+    let secondFilterValue = '';
+    let searchQuery = '';
 
+    firstFilter.addEventListener('change', (e) => {
+        firstFilterValue = e.target.value;
+        updateRecipes(firstFilterValue, secondFilterValue, searchQuery);
+    });
 
-}
+    secondFilter.addEventListener('change', (e) => {
+        secondFilterValue = e.target.value;
+        updateRecipes(firstFilterValue, secondFilterValue, searchQuery);
+    });
+
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        searchQuery = e.target[0].value;
+        updateRecipes(firstFilterValue, secondFilterValue, searchQuery);
+    });
+});
+
+console.log("index.js loaded");
