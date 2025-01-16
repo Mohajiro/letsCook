@@ -1,14 +1,15 @@
 // Chargement de la liste
-const dataLoading = async (url) => {
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+const dataLoading = async (url) => { 
+    try {  // On lance la methode try pour pouvoir executer la code
+        const response = await fetch(url); // Creation de constant qui va attendre telechargement de donne de URL
+        const data = await response.json(); // Transfer des données en format JSON
         return data;
-    } catch (error) {
+    } catch (error) { // si ça passe pas code de catch sera executer
         console.error('Error loading data:', error);
     }
 };
 
+ // Function d'affichage de la lisste des recettes
 const displayRecipes = (recipes) => {
     const recipesListe = document.querySelector('.recipes');
     if (!recipesListe) {
@@ -33,6 +34,7 @@ const displayRecipes = (recipes) => {
     });
 };
 
+// Creation de l'URL en founction de la dispobilites des filters differents
 const updateRecipes = async ( query = '', filter = '', limit = 12 ) => {
     const a = query ? `/search?q=${query}` : ''; 
     const b = filter ? `${query ? `&${filter}` : `?${filter}`}` : '' ;
@@ -45,6 +47,7 @@ const updateRecipes = async ( query = '', filter = '', limit = 12 ) => {
     }
 };
 
+// Les ecouteurs des evenements
 document.addEventListener('DOMContentLoaded', () => {
     dataLoading('https://dummyjson.com/recipes?limit=12')
         .then((data) => {

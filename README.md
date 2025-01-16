@@ -8,7 +8,6 @@
 
 Ce projet a été conçu pour :
 
-- Mettre en pratique la **Programmation Orientée Objet (POO)**.
 - Utiliser des **fonctions asynchrones** pour interagir avec une API REST.
 - Structurer un projet web avec des bonnes pratiques : **HTML sémantique**, **CSS modularisé**, et **JavaScript en modules**.
 - Préparer le déploiement d'une application web sur **Vercel**.
@@ -34,24 +33,22 @@ Ce projet a été conçu pour :
 ## Architecture du projet
 
 ```
-.
-├── assets
-│   ├── css
-│   │   ├── custom.css
-│   │   ├── reboot.css
-│   │   ├── style.css
-│   │   ├── utilities.css
-│   │   ├── variables.css
-│   │   ├── custom.scss
-|   |   └── custom.css.map
-│   ├── images
-│   │   └── logo.svg
-│   └── js
-│       ├── index.js
-│       └── index2.js
-├── index.html
 ├── README.md
-└── recette.html
+├── assets
+│   ├── css
+│   │   ├── custom.css
+│   │   ├── custom.css.map
+│   │   ├── custom.scss
+│   │   ├── reboot.css
+│   │   ├── style.css
+│   │   ├── utilites.css
+│   │   └── variables.css
+│   ├── images
+│   │   └── logo.svg
+│   └── js
+│       ├── index.js
+│       └── index2.js
+└── index.html
 ```
 
 ### Points clés de l'architecture :
